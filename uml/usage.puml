@@ -1,0 +1,17 @@
+@startuml
+
+title Диаграмма использования
+
+student as "Студент"
+usecase play as "Наслаждается игрой"
+student -> play
+usecase learn as "Укрепляет знания\nдискретной математики"
+learn <- student
+note bottom of student : Доволен
+
+teacher as "Ф.А.Н."
+usecase mark as "Оценивает игру студентов"
+teacher -> mark
+note bottom of teacher : Крайне доволен
+
+@enduml
