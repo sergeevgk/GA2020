@@ -1,0 +1,34 @@
+@startuml
+
+title Глобальные состояния
+
+closed -down-> levels
+note top of closed : Внимание! Только одна\nисходящая стрелочка.
+
+paused --> play
+paused --> settings
+paused --> levels
+
+levels -> play
+levels -left-> settings
+levels -up-> paused
+levels -up-> closed
+
+play -> levels
+play -up-> paused
+play -up-> closed
+
+settings -> levels
+settings -up-> paused
+settings -up-> closed
+
+state closed as "Приложение\nполностью закрыто"
+state paused as "Приложение\nв фоновом режиме"
+state levels as "Уровни"
+levels : [Внутриигровое состояние]\nИгрок находится на экране уровней
+state play as "Игра"
+play : [Внутриигровое состояние]\nИгрок наслаждается игрой\nна игровом экране
+state settings as "Настройки"
+settings : [Внутриигровое состояние]\nИгрок пребывает на экране настроек
+
+@enduml
