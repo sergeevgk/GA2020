@@ -1,0 +1,46 @@
+<idea-plugin>
+    <id>org.example.dsl1</id>
+    <name>Plugin display name here</name>
+    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.ultimate</depends>
+    <depends>com.intellij.modules.idea</depends>
+    <depends>com.intellij.modules.idea.ultimate</depends>
+
+    <actions>
+        <group id="design-patterns-group" text="Easy Pattern Constructor" popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </group>
+        <action id="singletonDesignPattern" class="epc.action.SingletonAction"
+                text="Singleton"
+                description="Implements singleton design pattern">
+            <add-to-group group-id="design-patterns-group" anchor="first"/>
+        </action>
+        <action id="builderDesignPattern" class="epc.action.BuilderAction"
+                text="Builder"
+                description="Implements builder design pattern">
+            <add-to-group group-id="design-patterns-group" relative-to-action="singletonDesignPattern" anchor="after"/>
+        </action>
+        <action id="visitorDesignPattern" class="epc.action.VisitorAction"
+                text="Visitor"
+                description="Implements visitor design pattern">
+            <add-to-group group-id="design-patterns-group" relative-to-action="builderDesignPattern" anchor="after"/>
+        </action>
+    </actions>
+</idea-plugin>

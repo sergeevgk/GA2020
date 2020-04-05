@@ -1,0 +1,3 @@
+void visit%s(%s %s) {
+    /* implement your visitor */
+}
