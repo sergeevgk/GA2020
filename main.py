@@ -1,10 +1,13 @@
-import os
+import re
 import sys
 import logging
-from parser.parser import parser
+from abstract_class.parser import parser
+from abstract_class.absract_class import AbstractClass
 
 if __name__ == '__main__':
+    res = re.match(r'class\s+\w+', 'class kek')
 
+    res = AbstractClass.is_class('class kek')
     if len(sys.argv) < 2:
         logging.error("Program input is: path_to_class_file language1 language2 language[N] "
                       "where language[i] is language for which you want to get class implementation")
