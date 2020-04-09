@@ -1,14 +1,10 @@
-import copy
 import re
-
 from abstract_class.absract_class import AbstractClass
 from abstract_class.absract_class import AbstractProperty
 from abstract_class.absract_class import AbstractAttribute
 from abstract_class.absract_class import AbsractMethod
 from abstract_class.absract_class import AbstractMethodParam
 from typing import List
-import logging
-
 
 class parser:
     cur_line = 0
