@@ -17,18 +17,17 @@ class AbstractAttribute(object):
 
 class AbstractMethodParam(object):
 
-    def __init__(self, param_type: str, param_name: str, default_value=None):
+    def __init__(self, param_type: str, param_name: str):
         self.type = param_type
         self.name = param_name
-        self.default_value = default_value
 
 
 class AbsractMethod(object):
 
-    def __init__(self, name: str = '', params: List[AbstractMethodParam]=None):
-        self.name = ''
-        self.params: List[AbstractMethodParam] = []
-        self.return_type = ''
+    def __init__(self, name: str = '', return_type='', params: List[AbstractMethodParam]=None):
+        self.name = name
+        self.params: List[AbstractMethodParam] = params or []
+        self.return_type = return_type
 
     @staticmethod
     def is_method(string: str):

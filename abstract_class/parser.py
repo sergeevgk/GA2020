@@ -1,6 +1,11 @@
+import copy
+import re
+
 from abstract_class.absract_class import AbstractClass
 from abstract_class.absract_class import AbstractProperty
 from abstract_class.absract_class import AbstractAttribute
+from abstract_class.absract_class import AbsractMethod
+from abstract_class.absract_class import AbstractMethodParam
 from typing import List
 import logging
 
@@ -9,29 +14,63 @@ class parser:
     cur_line = 0
 
     @staticmethod
-    def _parse_class(lines: List[str]):
-        #parse class name
-        class_and_name = lines[parser.cur_line].split(' ')
-        if len(class_and_name) < 2:
-            logging.error(f"syntax error in string: {parser.cur_line}, must be class ClassName, but was {lines[parser.cur_line]}")
-            exit(-1)
+    def parse_method(line: str) -> AbsractMethod:
+        meth = AbsractMethod()
 
-        abstr_class = AbstractClass(class_and_name[1])
-        while parser.cur_line < len(lines):
-            a = 2
+        res = re.search('\s*\w+\s+', line)
+        meth.return_type = res.group(0).strip()
+
+        cur_pos = res.end()
+        res = re.search('\w+\s*\(', line[cur_pos:])
+        cur_pos += res.end()
+        res1 = res.group(0)
+        meth.name = res1[:len(res1) - 1].strip()
+
+        res = re.findall('\w+', line[cur_pos:])
+
+        for i in range(0, len(res) - 1, 2):
+            meth.params.append(AbstractMethodParam(res[i], res[i + 1]))
+
+        return meth
 
     @staticmethod
-    def _parse_attr(line: str):
-        res = AbstractAttribute()
-        s1 = line.split('[')
-        if len(s1) is not 2:
-            logging.error(f"syntax error in line {parser.cur_line}. Expected [Attribute[=val]], but was {line}")
-            exit(-1)
+    def _parse_property(line: str) -> AbstractProperty:
+        prop_type = re.search('\w+', line)
+        val = re.search('\w+', line[prop_type.end():])
 
-        s2 = s1[1].split(']')
+        return AbstractAttribute(prop_type.group(0), val.group(0) if val is not None else None)
 
+    @staticmethod
+    def _parse_class(lines: List[str]) -> AbstractClass:
+        abstr_class = AbstractClass(lines[parser.cur_line].split(' ')[1])
 
-        return res
+        parser.cur_line += 1
+        cur_attrs: List[AbstractAttribute] = []
+        while parser.cur_line < len(lines):
+
+            cur_line = lines[parser.cur_line]
+            if AbstractAttribute.is_attr(cur_line):
+                cur_attrs.append(parser._parse_attr(cur_line))
+            elif AbsractMethod.is_method(cur_line):
+                cur_attrs = []
+                meth = parser.parse_method(cur_line)
+                abstr_class.methods.append(meth)
+            elif AbstractProperty.is_property(cur_line):
+                prop = parser._parse_property(cur_line)
+                prop.attrs = cur_attrs
+                cur_attrs = []
+                abstr_class.properties.append(prop)
+
+            parser.cur_line += 1
+
+        return abstr_class
+
+    @staticmethod
+    def _parse_attr(line: str) -> AbstractAttribute:
+        name = re.search('\w+', line)
+        val = re.search('\w+', line[name.end():])
+
+        return AbstractAttribute(name.group(0), val.group(0) if val is not None else None)
 
     @staticmethod
     def parse_abstract_class(file_name: str):
@@ -48,7 +87,7 @@ class parser:
             line = lines[parser.cur_line]
 
             if AbstractAttribute.is_attr(line) and abstr_class is None:
-                class_attrs.append(AbstractAttribute(line))
+                class_attrs.append(parser._parse_attr(line))
             elif AbstractClass.is_class(line):
                 abstr_class = parser._parse_class(lines)
                 break
