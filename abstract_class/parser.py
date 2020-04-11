@@ -38,7 +38,8 @@ class parser:
 
     @staticmethod
     def _parse_class(lines: List[str]) -> AbstractClass:
-        abstr_class = AbstractClass(lines[parser.cur_line].split(' ')[1])
+        res = re.findall('\w+', lines[parser.cur_line])
+        abstr_class = AbstractClass(res[1])
 
         parser.cur_line += 1
         cur_attrs: List[AbstractAttribute] = []
