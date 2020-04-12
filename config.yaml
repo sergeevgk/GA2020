@@ -1,0 +1,17 @@
+supported_languages:
+  - python
+  - kotlin
+
+
+plugins:
+  python:
+    enable: true
+    description: Generating source code on Python Language
+    clazz: class_desc_gen.plugins.python_autogen.plugin.PythonAutoGenPlugin
+    output_dir_name: PYTHON_AUTOGEN
+
+  kotlin:
+    enable: false
+    description: Generating source code on Kotlin language
+    clazz: class_desc_gen.plugins.kotlin_autogen.plugin.KotlinAutoGenPlugin
+    output_dir_name: KOTLIN_AUTOGEN

@@ -1,10 +1,10 @@
 import re
+
 from typing import List
 
 
 class AbstractAttribute(object):
-
-    def __init__(self, name: str = '', val=None):
+    def __init__(self, name: str='', val=None):
         self.name = name
         self.val = val
 
@@ -16,15 +16,13 @@ class AbstractAttribute(object):
 
 
 class AbstractMethodParam(object):
-
     def __init__(self, param_type: str, param_name: str):
         self.type = param_type
         self.name = param_name
 
 
-class AbsractMethod(object):
-
-    def __init__(self, name: str = '', return_type='', params: List[AbstractMethodParam]=None):
+class AbstractMethod(object):
+    def __init__(self, name: str='', return_type='', params: List[AbstractMethodParam]=None):
         self.name = name
         self.params: List[AbstractMethodParam] = params or []
         self.return_type = return_type
@@ -37,14 +35,13 @@ class AbsractMethod(object):
 
 
 class AbstractProperty(object):
-
     def __init__(self, prop_type: str, prop_name: str, prop_attrs=None):
         if prop_attrs is None:
             prop_attrs = []
 
         self.type = prop_type
         self.name = prop_name
-        self.attrs = prop_attrs
+        self.attrs: List[AbstractAttribute] = prop_attrs
 
     @staticmethod
     def is_property(string: str):
@@ -57,8 +54,11 @@ class AbstractProperty(object):
 
 
 class AbstractClass(object):
-
-    def __init__(self, class_name: str = '', attrs=None, properties=None, methods=None):
+    def __init__(self,
+                 class_name: str='',
+                 attrs: List[AbstractAttribute]=None,
+                 properties: List[AbstractProperty]=None,
+                 methods: List[AbstractMethod]=None):
         self.name = class_name
         self.attrs = attrs or []
         self.properties = properties or []

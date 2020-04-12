@@ -1,0 +1,28 @@
+{% for import_func in class_attrs_import_functions   -%}
+{{   import_func()                                    }}
+{{-   "\n"                                           -}}
+{%- endfor                                           -%}
+{{-   "\n"                                           -}}
+{{-   "\n"                                           -}}
+{% for autogen_func in class_attrs_autogen_functions -%}
+{{   autogen_func()                                   }}
+{{-   "\n"                                           -}}
+{%- endfor                                           -%}
+class {{ class_name }}(object):
+    def __init__(self):
+{% for prop in class_properties_names                 %}
+        self.__{{ prop }} = None
+{%- endfor                                            %}
+{{-   "\n"                                           -}}
+
+{%- for prop in class_properties_names                %}
+    @property
+    def {{ prop }}(self):
+        return self.__{{ prop }}
+
+    @{{ prop }}.setter
+    def {{ prop }}(self, value):
+        self.__{{ prop }} = value
+{{-   "\n"                                           -}}
+{% endfor                                             %}
+{{ class_methods_print_func()                        -}}
