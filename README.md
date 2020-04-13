@@ -16,7 +16,7 @@ IntelliJ IDEA Plugin to simplify design pattern usage. Using DSL method.
 - Visitor
 
 ## Диаграмма использования
-![](https://github.com/Nikitagritsaenko/Easy-Pattern-Constructor/blob/master/diagrams/uml_use_case.JPG)
+![](https://github.com/sergeevgk/GA2020/tree/E-%3D-pc/diagrams/uml_use_case.JPG)
 
 ## Описание GUI пользователя
 
@@ -28,16 +28,16 @@ IntelliJ IDEA Plugin to simplify design pattern usage. Using DSL method.
 4. Получить сгенерированный код, дополнить его в своих целях
 
 ## Диаграмма состояний
-![](https://github.com/Nikitagritsaenko/Easy-Pattern-Constructor/blob/master/diagrams/uml_state.jpg)
+![](https://github.com/sergeevgk/GA2020/tree/E-%3D-pc/diagrams/uml_state.jpg)
 
 ## Примеры
 
 ### Singleton
-![](https://github.com/Nikitagritsaenko/Easy-Pattern-Constructor/blob/master/gifs/singleton.gif)
+![](https://github.com/sergeevgk/GA2020/tree/E-%3D-pc/gifs/singleton.gif)
 
 ### Builder
-![](https://github.com/Nikitagritsaenko/Easy-Pattern-Constructor/blob/master/gifs/builder.gif)
+![](https://github.com/sergeevgk/GA2020/tree/E-%3D-pc/gifs/builder.gif)
 
 ### Visitor
-![](https://github.com/Nikitagritsaenko/Easy-Pattern-Constructor/blob/master/gifs/visitor.gif)
+![](https://github.com/sergeevgk/GA2020/tree/E-%3D-pc/gifs/visitor.gif)
 
