@@ -1,0 +1,2 @@
+([+{shape=box}] <0{color=blue}> ([A]) <1{color=red}> ([*{shape=box}] <0{color=blue}> ([B])
+<1{color=red}> ([C])))
