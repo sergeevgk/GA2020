@@ -56,14 +56,9 @@ public class DotGenerator {
 
 			// generate node declaration
 			current = _nodesStack.peek();
-			try {
-				_writer.append('\t');
-				_writer.write(getIDAndCheck(current) + " ");
-				printAttributes(current);
-				_writer.append('\n');
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+			_stringBuilder.append('\t').append(getIDAndCheck(current)).append(" ");
+			printAttributes(current);
+			_stringBuilder.append('\n');
 
 			// generate link with parent node
 			if (nodesAmount > 1) {
@@ -72,16 +67,10 @@ public class DotGenerator {
 					System.err.println("No links on the stack with several nodes");
 					return;
 				}
-				try {
-					_writer.append('\t');
-					_writer.write(getIDAndCheck(previous));
-					_writer.write(" -- ");
-					_writer.write(getIDAndCheck(current) + " ");
-					printAttributes(_linksStack.pop());
-					_writer.append('\n');
-				} catch (IOException e) {
-					System.out.println(e.getMessage());
-				}
+				_stringBuilder.append('\t').append(getIDAndCheck(previous));
+				_stringBuilder.append(" -- ").append(getIDAndCheck(current)).append(" ");
+				printAttributes(_linksStack.pop());
+				_stringBuilder.append(" ").append('\n');
 			}
 		}
 
@@ -184,19 +173,17 @@ public class DotGenerator {
 			return new Pair<>(values[0].trim(), values[1].trim());
 		}
 
-		private void printAttributes(HashMap<String, String> attrMap) throws IOException {
+		private void printAttributes(HashMap<String, String> attrMap) {
 			String key;
-			_writer.write("[ ");
+			_stringBuilder.append("[ ");
 			for (Map.Entry pair : attrMap.entrySet()) {
 				key = (String) pair.getKey();
 				if (!key.equals(_idKey)) {
-					_writer.write(key);
-					_writer.write("=\"");
-					_writer.append((String) pair.getValue());
-					_writer.write("\" ");
+					_stringBuilder.append(key);
+					_stringBuilder.append("=\"").append((String) pair.getValue()).append("\" ");
 				}
 			}
-			_writer.append(']');
+			_stringBuilder.append(']');
 		}
 
 		private String getIDAndCheck(HashMap<String, String> attrMap) {
@@ -210,24 +197,21 @@ public class DotGenerator {
 
 
 	private ParseTree _tree;
+	private StringBuilder _stringBuilder;
 	private ParseTreeWalker _walker = new ParseTreeWalker();
-	private FileWriter _writer;
+
 
 	public DotGenerator(ParseTree tree) {
 		_tree = tree;
 	}
 
-	public void generateDot(String filename, String graphname) {
+	public String generateDot(String graphName) {
 		DotListener listener = new DotListener();
-		try {
-			_writer = new FileWriter(filename, false);
-			_writer.write("graph " + graphname + " {\n");
-			_walker.walk(listener, _tree);
-			_writer.append('}');
-			_writer.flush();
-			_writer.close();
-		} catch (IOException ex) {
-			System.out.println(ex.getMessage());
-		}
+		_stringBuilder = new StringBuilder();
+
+		_stringBuilder.append("graph ").append(graphName).append(" {\n");
+		_walker.walk(listener, _tree);
+		_stringBuilder.append('}');
+		return _stringBuilder.toString();
 	}
 }
