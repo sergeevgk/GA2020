@@ -11,6 +11,8 @@ import java.nio.file.Paths;
 
 public class Main {
 
+	static String _defaultOutput = "generated_dot.txt";
+
 	static ParseTree generateParseTree(String line) {
 		ASTgrammarLexer lexer = new ASTgrammarLexer(CharStreams.fromString(line));
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -40,7 +42,7 @@ public class Main {
 		int fileNumber = 1;
 		for (File entry : folderEntries) {
 			if (!entry.isDirectory()) {
-				outputFile = outputFolder + "dot" + fileNumber + ".txt";
+				outputFile = outputFolder + "\\generated_dot" + fileNumber + ".txt";
 				processFile(entry.getAbsolutePath(), outputFile);
 				fileNumber++;
 			}
@@ -52,15 +54,11 @@ public class Main {
 			System.out.println("No program arguments found");
 			return;
 		}
-		String inputFolder, outputFolder;
-		inputFolder = args[0];
-		if (args.length > 1) {
-			outputFolder = args[1] + "\\";
-		} else {
-			outputFolder = "";
-		}
+		String inputFile = args[0], outputFile = _defaultOutput;
+		if (args.length > 1)
+			outputFile = args[1];
 		try {
-			processFolder(inputFolder, outputFolder);
+			processFile(inputFile, outputFile);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
