@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 public class Main {
 
 	static String _defaultOutput = "generated_dot.txt";
-	static String _defaultOutputForPy = "generated_dot_for_py.txt";
 
 	static ParseTree generateParseTree(String line) {
 		ASTgrammarLexer lexer = new ASTgrammarLexer(CharStreams.fromString(line));
@@ -31,28 +30,15 @@ public class Main {
 
 		DotGenerator generator = new DotGenerator(tree);
 		FileWriter writer = new FileWriter(outputFile, false);
-
-		String dotString = generator.generateDot("Tree");
-		writer.write(dotString);
+		writer.write(generator.generateDot("Tree"));
 		writer.flush();
 		writer.close();
 
-		String dot_string_for_py = dotString.replace("\"", "\\\"");
-
-		writer = new FileWriter(_defaultOutputForPy, false);
-		writer.write(dot_string_for_py);
-		writer.flush();
-		writer.close();
-
-		try{
-			Process p = Runtime.getRuntime().exec("python DOTURLGenerator.py "+ _defaultOutputForPy);
-		}
-		catch(Exception e)
-		{
+		try {
+			Process p = Runtime.getRuntime().exec("python DOTURLGenerator.py " + outputFile);
+		} catch (Exception e) {
 			System.out.println("Main.processFile Can't call python script DOTURLGenerator.py");
 		}
-
-
 	}
 
 	static void processFolder(String inputFolder, String outputFolder) throws IOException {
