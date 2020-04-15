@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 
 public class Main {
 
+	static String _defaultInput = "random_generated_tree.txt";
 	static String _defaultOutput = "generated_dot.txt";
 
 	static ParseTree generateParseTree(String line) {
@@ -34,11 +35,7 @@ public class Main {
 		writer.flush();
 		writer.close();
 
-		try {
-			Process p = Runtime.getRuntime().exec("python DOTURLGenerator.py " + outputFile);
-		} catch (Exception e) {
-			System.out.println("Main.processFile Can't call python script DOTURLGenerator.py");
-		}
+		pythonScriptExecute("DOTURLGenerator.py", outputFile);
 	}
 
 	static void processFolder(String inputFolder, String outputFolder) throws IOException {
@@ -55,18 +52,38 @@ public class Main {
 		}
 	}
 
-	public static void main(String[] args) {
-		if (args.length == 0) {
-			System.out.println("No program arguments found");
-			return;
+	static void pythonScriptExecute(String script, String scriptArgs) {
+		String command = "python " + script + " " + scriptArgs;
+		try {
+			Process p = Runtime.getRuntime().exec(command);
+			while (p.isAlive()) {
+				Thread.sleep(100);
+			}
+		} catch (Exception e) {
+			System.err.println("Can't call python script " + script);
 		}
-		String inputFile = args[0], outputFile = _defaultOutput;
-		if (args.length > 1)
-			outputFile = args[1];
+	}
+
+	public static void main(String[] args) {
+		String inputFile = _defaultInput, outputFile = _defaultOutput;
+
+		switch (args.length) {
+			case 0:
+				System.out.println("No program arguments found, generating random tree...");
+				pythonScriptExecute("random_tree_generator.py", _defaultInput);
+				break;
+			case 1:
+				System.out.println("Output will be generated to " + _defaultOutput);
+				inputFile = args[0];
+				break;
+			default:
+				inputFile = args[0];
+				outputFile = args[1];
+		}
 		try {
 			processFile(inputFile, outputFile);
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 }
