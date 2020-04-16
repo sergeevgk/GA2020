@@ -111,7 +111,7 @@ public class DotGenerator {
 
 		@Override
 		public void enterTxt(ASTgrammarParser.TxtContext ctx) {
-			String text = ctx.getText();
+			String text = ctx.getText().replace("\"", "\\\"");
 			Pair<String, String> pair;
 			if (_statesStack.empty()) {
 				System.err.println("Empty stack before text");
