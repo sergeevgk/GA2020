@@ -31,6 +31,65 @@ DOT-строка, которая затем записывается в файл
 
 Чтобы иметь возможность задавать имена узлов произвольными символами, а также иметь несколько разных узлов с одинаковыми именами, набор символов, указанный во входном языке в качестве имени узла, кодируется в DOT в качестве значения атрибута ```label```, в то время как сами узлы в DOT именуются возрастающими целочисленными идентификаторами. В случае, если явно указать в комментарии входного языка значение атрибута ```label```, то в сгенерированном DOT-коде будет использоваться оно, а имя узла будет проигнорировано.
 
+## Результаты работы
+### Пример 1
+Рассмотрим, как работает алгоритм генерации на примере, приведенном выше:
+
+```([+{это имя узла}]<0{это имя дуги}>([A])<1>([*]<0>([B])<1>([C])))```
+
+Сгенерированный DOT-код:
+
+![DOT1](https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example1_DOT.png "DOT example 1")
+
+Результат отрисовки в GraphvizOnline:
+
+![example 1](https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example1.png "example 1")
+
+### Пример 2
+Тот же пример с атрибутами:
+
+```([+{shape=box}]<0{color=blue}>([A])<1{color=red}>([*{shape=box}]<0{color=blue}>([B])<1{color=red}>([C])))```
+
+Сгенерированный DOT-код:
+
+![DOT2](https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example2_DOT.png "DOT example 2")
+
+Результат отрисовки в GraphvizOnline:
+
+![example 2](https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example2.png "example 2")
+
+### Пример 3
+Рассмотрим пример работы на случайном дереве, сгенерированном скриптом *random_tree_generator.py*:
+
+```  
+([P{shape=ellipse}{fontcolor=blue}]
+<2{style=filled}{color=blue}{fontcolor=black}>([J{shape=circle}{fontcolor=black}])
+<2{style=bold}{color=goldenrod}{fontcolor=black}>([p{shape=diamond}{fontcolor=sienna}]
+<0{style=filled}{color=black}{fontcolor=red}>([i{shape=ellipse}{fontcolor=red}]
+<2{style=filled}{color=red}{fontcolor=blue}>([a{shape=circle}{fontcolor=green}]
+<7{style=dotted}{color=blue}{fontcolor=black}>([o{shape=circle}{fontcolor=goldenrod}]
+<0{style=filled}{color=black}{fontcolor=red}>([K{shape=octagon}{fontcolor=black}])
+<4{style=bold}{color=red}{fontcolor=green}>([o{shape=diamond}{fontcolor=blue}])
+<1{style=dotted}{color=goldenrod}{fontcolor=sienna}>([i{shape=ellipse}{fontcolor=goldenrod}]))))
+<7{style=filled}{color=blue}{fontcolor=black}>([i{shape=circle}{fontcolor=sienna}]
+<1{style=dotted}{color=black}{fontcolor=black}>([A{shape=circle}{fontcolor=blue}]
+<7{style=bold}{color=red}{fontcolor=red}>([j{shape=circle}{fontcolor=green}]
+<5{style=filled}{color=green}{fontcolor=red}>([s{shape=ellipse}{fontcolor=goldenrod}]))
+<2{style=bold}{color=sienna}{fontcolor=sienna}>([v{shape=circle}{fontcolor=sienna}])
+<3{style=filled}{color=goldenrod}{fontcolor=red}>([Y{shape=diamond}{fontcolor=black}]
+<4{style=bold}{color=red}{fontcolor=goldenrod}>([a{shape=octagon}{fontcolor=sienna}])
+<6{style=filled}{color=sienna}{fontcolor=blue}>([q{shape=octagon}{fontcolor=black}])
+<5{style=filled}{color=blue}{fontcolor=red}>([D{shape=polygon}{fontcolor=goldenrod}]))))))
+```
+
+Сгенерированный DOT-код:
+
+![DOT5(https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example5_DOT.png "DOT example 5)
+
+Результат отрисовки в GraphvizOnline:
+
+![example 5(https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example5.png "example 5)
+
 
 # Структура проекта
 - Файл *ChartPC.jar* - результат компиляции программы, при запуске преобразует описание дерева из входного файла в DOT, который записывает в выходной файл. Из этого файла вызываются скрипты *DOTURLGenerator.py* и *random_tree_generator.py*.
@@ -45,6 +104,8 @@ DOT-строка, которая затем записывается в файл
 - Папка *gen_dot* - содержит результаты работы программы на файлах из папки *examples*.
 
 Для запуска и работы программы необходимы только первые 3 файла.
+
+
 # Установка и запуск
 Для запуска программы (на Windows) достаточно запустить исполняемый файл ChartPC.jar с помощью команды:
 
@@ -67,4 +128,3 @@ DOT-строка, которая затем записывается в файл
 4. Выбрать папку для результатов компиляции (во вкладке File->Project Structure->Project в графе Project compiler output выбрать папку out (или любую другую))
 5. Добавить папку libs в зависимости проекта (во вкладке File->Project Structure->Modules->Dependencies нажать на +, выбрать JARs or directories и в открывшемся окне выбрать папку libs)
 6. Пометить папки src и gen, как директории с исходниками (в окне со структурой проекта: правый клик по папке src->Mark Directory as->Sources Root, правый клик по папке gen->Mark Directory as->Generated Sources Root)
-
