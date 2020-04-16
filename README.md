@@ -84,11 +84,11 @@ DOT-строка, которая затем записывается в файл
 
 Сгенерированный DOT-код:
 
-![DOT5(https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example5_DOT.png "DOT example 5)
+![DOT5](https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example5_DOT.png "DOT example 5")
 
 Результат отрисовки в GraphvizOnline:
 
-![example 5(https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example5.png "example 5)
+![example 5](https://github.com/sergeevgk/GA2020/blob/ChartPS/pictures/example5.png "example 5")
 
 
 # Структура проекта
