@@ -45,9 +45,9 @@ def generate_tree(max_depth, max_children):
     return ''.join(tree)
 
 
-default_file = "random_generated_tree.txt"
+filename = "random_generated_tree.txt"
 if len(sys.argv) > 1:
-    default_file = sys.argv[1]
-file = open(default_file, 'w')
+    filename  = sys.argv[1]
+file = open(filename, 'w')
 file.write(generate_tree(6, 3))
 file.close()

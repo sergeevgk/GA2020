@@ -35,7 +35,7 @@ public class Main {
 		writer.flush();
 		writer.close();
 
-		pythonScriptExecute("DOTURLGenerator.py", outputFile);
+		pythonScriptExecute("DOT_URL_generator.py", outputFile);
 	}
 
 	static void processFolder(String inputFolder, String outputFolder) throws IOException {
