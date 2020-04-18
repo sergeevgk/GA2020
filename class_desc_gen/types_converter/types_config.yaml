@@ -7,7 +7,7 @@ types:
     float: float
     string: str
 
-  kotlin:
+  java:
     int:
     bool:
     list:
