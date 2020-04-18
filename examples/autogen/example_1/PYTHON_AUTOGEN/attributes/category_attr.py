@@ -16,4 +16,5 @@ def category_class_attribute(name):
             return name
 
         setattr(class_to_dec, 'get_category', category_getter)
+        return class_to_dec
     return decorator

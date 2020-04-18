@@ -1,0 +1,58 @@
+{% for import_func in class_attrs_import_functions   -%}
+{{   import_func()                                    }}
+{{-   "\n"                                           -}}
+{%- endfor                                           -%}
+from .abstract_class.abstract_class import Abstract{{- class_name_camel_case -}}Class
+{{-   "\n"                                           -}}
+{{-   "\n"                                           -}}
+{{-   "\n"                                           -}}
+{% for autogen_func in class_attrs_autogen_functions -%}
+{{   autogen_func()                                   }}
+{{-   "\n"                                           -}}
+{%- endfor                                           -%}
+class {{ class_name_camel_case }}(object):
+{% for prop in class_static_properties                %}
+    __{{ prop.name }} = {{ prop.val }}
+{%- endfor                                           -%}
+{{-   "\n"                                            }}
+    def __init__(self):
+        self.__abstract_class = Abstract{{- class_name_camel_case -}}Class()
+{% for prop in class_properties                       %}
+        self.__{{ prop.name }} = {{ prop.val }}
+{%- endfor                                           -%}
+{{-   "\n"                                            }}
+
+{%- for prop in class_properties                      %}
+    @property
+    def {{ prop.name }}(self):
+        return self.__{{ prop.name }}
+{%- if prop.const is false                           %}
+{{-   "\n"                                            }}
+    @{{ prop.name }}.setter
+    def {{ prop.name }}(self, value):
+        self.__{{ prop.name }} = value
+{{-   "\n"                                            }}
+{%- else                                             -%}
+{{-   "\n"                                           -}}
+{%- endif                                            -%}
+{% endfor                                             %}
+
+{%- for prop in class_static_properties               %}
+    @property
+    def {{ prop.name }}(self):
+        return type(self).__{{ prop.name }}
+{%- if prop.const is false                           -%}
+{{-   "\n"                                            }}
+    @{{ prop.name }}.setter
+    def {{ prop.name }}(self, value):
+        type(self).__{{ prop.name }} = value
+{{-   "\n"                                            }}
+{%- else                                             -%}
+{{-   "\n"                                           -}}
+{%- endif                                            -%}
+{% endfor                                             %}
+    @property
+    def _abstract_class(self) -> Abstract{{- class_name_camel_case -}}Class:
+        return self.__abstract_class
+{{-   "\n"                                            }}
+{{ class_methods_print_func()                        -}}

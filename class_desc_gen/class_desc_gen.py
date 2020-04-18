@@ -10,7 +10,7 @@ from class_desc_gen._config_parser import ConfigParser, ConfigData
 
 
 class ClassDescGenSystem(object):
-    _CONFIG_FILE_PATH = "./config.yaml"
+    _CONFIG_FILE_PATH = "./supported_languages_config.yaml"
     _OUTPUT_AUTOGEN_DIR = "./examples/autogen"
 
     def __init__(self):

@@ -6,13 +6,13 @@ class _AutogenScriptsConfig(object):
     CONFIG = dict()
 
 
-_AUTOGEN_SCRIPTS_CONFIG_FILE_PATH = "./attribute_system/config.yaml"
+_AUTOGEN_SCRIPTS_CONFIG_FILE_PATH = "./attribute_system/all_supported_attributes_config.yaml"
 
 
 def _config_preload(func_to_dec):
     if not _AutogenScriptsConfig.CONFIG:
         with open(_AUTOGEN_SCRIPTS_CONFIG_FILE_PATH, "r") as f:
-            _AutogenScriptsConfig.CONFIG = yaml.load(f)
+            _AutogenScriptsConfig.CONFIG = yaml.load(f, Loader=yaml.FullLoader)
 
     def inner(*args, **kwargs):
         return func_to_dec(*args, **kwargs)

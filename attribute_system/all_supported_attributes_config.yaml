@@ -30,3 +30,15 @@ attributes:
       autogen_function: attribute_system.attributes_autogen_functions.python.sorted_function
       import_function: attribute_system.attributes_import_functions.python.sorted_import_function
       is_class_attribute: true
+
+  not_serializable:
+    python:
+      is_class_attribute: false
+
+  static:
+    python:
+      is_class_attribute: false
+
+  const:
+    python:
+      is_class_attribute: false

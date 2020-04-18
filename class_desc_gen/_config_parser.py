@@ -60,7 +60,7 @@ class ConfigParser(object):
     @staticmethod
     def parse(config_file_path: str) -> ConfigData:
         with open(config_file_path, "r") as f:
-            data = yaml.load(f)
+            data = yaml.load(f, Loader=yaml.FullLoader)
 
         res = ConfigData()
         res.supported_languages = data["supported_languages"]

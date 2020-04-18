@@ -5,13 +5,13 @@ class _TypesConverterConfig(object):
     CONFIG = dict()
 
 
-_TYPES_CONVERTER_CONFIG_FILE_PATH = "./class_desc_gen/types_converter/config.yaml"
+_TYPES_CONVERTER_CONFIG_FILE_PATH = "./class_desc_gen/types_converter/types_config.yaml"
 
 
 def _config_preload(func_to_dec):
     if not _TypesConverterConfig.CONFIG:
         with open(_TYPES_CONVERTER_CONFIG_FILE_PATH, "r") as f:
-            _TypesConverterConfig.CONFIG = yaml.load(f)
+            _TypesConverterConfig.CONFIG = yaml.load(f, Loader=yaml.FullLoader)
 
     def inner(*args, **kwargs):
         return func_to_dec(*args, **kwargs)
