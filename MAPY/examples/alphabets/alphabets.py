@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 
 def n_char(a: str) -> int:

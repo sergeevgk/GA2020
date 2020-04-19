@@ -75,7 +75,7 @@ class PythonEmitter(MAPYVisitor):
         self.table.enter_env()
         self.visitChildren(ctx)
         self.table.exit_env()
-        self.python = "# -*- coding: utf-8 -*-\n" + "".join(map(lambda im: f"import {im}\n", self.imports)) + "\n\n" + \
+        self.python = "".join(map(lambda im: f"import {im}\n", self.imports)) + "\n\n" + \
                       "".join(map(lambda f: f"{self.funcs[f]}\n\n\n", self.functions)) + \
                       "".join(map(lambda cl: f"{self.cls[cl]}\n\n\n", self.classes)) + self.python + "\n"
         self.python = self.python.replace("\t", "    ")
