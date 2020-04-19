@@ -2,6 +2,18 @@
 
 DSL для перевода псевдокода в LaTeX и Python.
 
+## Что полезного делает DSL во внешнем мире?
+
+![Диаграмма использования](http://www.plantuml.com/plantuml/svg/dP0nIiH058RxESKhJJ4vm23B7i32mi9sSMVTm9g1-2o4BIGBMhg5bI0s7Y2kYGpHv0p_tCWVj12qKQPwytt_6-QVdkkiqekpbLdvXOe6gOhJfSgygFo95g4q3ayvjZaUSYVMhYVYiCKkrHZJbJFV1s8xaJqyfWsUyOQ87aswHaotWeONBw36iSOxHkooNzDtH7tQKEama4L6AAF1m3EY4-frkg7oYXQK4D5bvjz9sLzRouVlgRIPAOFwhnB2uY-_4IS7ioD__6F3vsBYmqjTij6fB-Ti_0C0)
+
+## Как называется DSL?
+
+![MAPY = Mathematics Algorithm PYthon](https://latex.codecogs.com/svg.latex?\mathtt{MAPY}%20=%20\mathtt{M}\mathrm{athematics}%20\%20%20\mathtt{A}\mathrm{lgorithm}%20\%20%20\mathtt{PY}\mathrm{thon})
+
+## Результаты
+
+Скоро...
+
 ## Получение кода
 ```cmd
 git clone https://github.com/...
