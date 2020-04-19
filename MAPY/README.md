@@ -10,9 +10,235 @@ DSL для перевода псевдокода в LaTeX и Python.
 
 ![MAPY = Mathematics Algorithm PYthon](https://latex.codecogs.com/svg.latex?\mathtt{MAPY}%20\quad%20=%20\quad%20\mathtt{M}\mathrm{athematics}%20\quad%20\mathtt{A}\mathrm{lgorithm}%20\quad%20\mathtt{PY}\mathrm{thon})
 
+## Инструментарий 
+
+Для описания грамматики и для обходов AST деревьев использовалась библиотека `ANTLR v4`. Грамматика находится в файле [MAPY.g4](MAPY.g4). Визиторы для трансляции в LaTeX и Python находятся в файлах [LaTeX_emitter.py](LaTeX_emitter.py) и [Python_emitter.py](Python_emitter.py) соответственно.
+
 ## Результаты
 
-Скоро...
+### Обход графа в ширину
+
+- MAPY
+
+```mapy
+// Обход графа в ширину
+Вход: граф Г(V, E), представленный списками смежности G.
+Выход: последовательность вершин обхода.
+func BFS(G : array [1..p] of set)
+    T : queue
+    V : set
+    x : array [1..|G|] of 0..1
+    V := {1..|G|}
+    for v \in V do x[v] := 0 end for //вначале все вершины не отмечены
+    select v \in V //начало обхода — произвольная вершина
+    v \to T //помещаем v в структуру данных T...
+    x[v] := 1 //... и отмечаем вершину v
+    repeat
+        u \gets T //извлекаем вершину из структуры данных T...
+        yield u //... и возвращаем её в качестве очередной пройденной
+        for w \in G[u] do
+            if x[w] = 0 then
+                w \to T //помещаем w в структуру данных T...
+                x[w] := 1 //... и отмечаем вершину w
+            end if
+        end for
+    until T = \varnothing
+end func
+```
+
+- LaTeX
+
+![BFS](examples/traversing_graph/BFS.PNG)
+
+- Python
+
+```python
+import random
+
+
+def select(it):
+    x = random.sample(it, 1)[0]
+    it.remove(x)
+    return x
+
+
+class queue:
+    arr: list
+
+    def __init__(self):
+        self.arr = []
+
+    def enqueue(self, x):
+        self.arr.append(x)
+
+    def dequeue(self):
+        return self.arr.pop(0)
+
+    def empty(self):
+        return len(self.arr) == 0
+
+    def clear(self):
+        return self.arr.clear()
+
+
+#  Обход графа в ширину
+# Вход: граф Г(V, E), представленный списками смежности G.
+# Выход: последовательность вершин обхода.
+def BFS(G: list):
+    T = queue() 
+    V = set() 
+    x = [None for _ in range(len(G) - 1 + 1)] 
+    V = set(range(1, len(G) + 1)) 
+    for v in V: x[v - 1] = 0  # вначале все вершины не отмечены
+    v = select(V) # начало обхода — произвольная вершина
+    T.enqueue(v) # помещаем v в структуру данных T...
+    x[v - 1] = 1 # ... и отмечаем вершину v
+    while True: 
+        u = T.dequeue() # извлекаем вершину из структуры данных T...
+        yield u # ... и возвращаем её в качестве очередной пройденной
+        for w in G[u - 1]: 
+            if x[w - 1] == 0: 
+                T.enqueue(w) # помещаем w в структуру данных T...
+                x[w - 1] = 1 # ... и отмечаем вершину w
+        if T.empty(): break
+```
+
+### Обход графа в глубину
+
+- MAPY
+
+```mapy
+// Обход графа в глубину
+Вход: граф Г(V, E), представленный списками смежности G.
+Выход: последовательность вершин обхода.
+func DFS(G : array [1..p] of set)
+    T : stack
+    V : set
+    x : array [1..|G|] of 0..1
+    V := {1..|G|}
+    for v \in V do x[v] := 0 end for //вначале все вершины не отмечены
+    select v \in V //начало обхода — произвольная вершина
+    v \to T //помещаем v в структуру данных T...
+    x[v] := 1 //... и отмечаем вершину v
+    repeat
+        u \gets T //извлекаем вершину из структуры данных T...
+        yield u //... и возвращаем её в качестве очередной пройденной
+        for w \in G[u] do
+            if x[w] = 0 then
+                w \to T //помещаем w в структуру данных T...
+                x[w] := 1 //... и отмечаем вершину w
+            end if
+        end for
+    until T = \varnothing
+end func
+```
+
+- LaTeX
+
+![DFS](examples/traversing_graph/DFS.PNG)
+
+- Python
+
+```python
+import random
+
+
+def select(it):
+    x = random.sample(it, 1)[0]
+    it.remove(x)
+    return x
+
+
+class stack:
+    arr: list
+
+    def __init__(self):
+        self.arr = []
+
+    def push(self, x):
+        self.arr.append(x)
+
+    def pop(self):
+        return self.arr.pop()
+
+    def top(self):
+        return self.arr[-1]
+
+    def empty(self):
+        return len(self.arr) == 0
+
+    def clear(self):
+        return self.arr.clear()
+
+
+#  Обход графа в глубину
+# Вход: граф Г(V, E), представленный списками смежности G.
+# Выход: последовательность вершин обхода.
+def DFS(G: list):
+    T = stack() 
+    V = set() 
+    x = [None for _ in range(len(G) - 1 + 1)] 
+    V = set(range(1, len(G) + 1)) 
+    for v in V: x[v - 1] = 0  # вначале все вершины не отмечены
+    v = select(V) # начало обхода — произвольная вершина
+    T.push(v) # помещаем v в структуру данных T...
+    x[v - 1] = 1 # ... и отмечаем вершину v
+    while True: 
+        u = T.pop() # извлекаем вершину из структуры данных T...
+        yield u # ... и возвращаем её в качестве очередной пройденной
+        for w in G[u - 1]: 
+            if x[w - 1] == 0: 
+                T.push(w) # помещаем w в структуру данных T...
+                x[w - 1] = 1 # ... и отмечаем вершину w
+        if T.empty(): break
+```
+
+### Решето Эратосфена
+
+- MAPY
+
+```mapy
+// Для построения множества простых чисел, не превосходящих данного числа n,
+// используют простой способ, называемый решетом Эратосфена.
+Вход: натуральное число n > 1.
+Выход: множество простых чисел, не превосходящих n.
+func Eratosthenes(n : int)
+    B : set
+    B := {2..n}
+    while B \neq \varnothing do
+        x := min(B) //наименьший элемент B
+        yield x //выдать x
+        B := B - x //удалить x из B
+        y := x ^ 2
+        while y \leq n do
+            B := B - y; y := y + x //удалить из B все числа, кратные x
+        end while
+    end while
+end func
+```
+
+- LaTeX
+
+![Eratosthenes](examples/sieve_eratosthenes/Eratosthenes.PNG)
+
+- Python
+
+```python
+#  Для построения множества простых чисел, не превосходящих данного числа n,
+#  используют простой способ, называемый решетом Эратосфена.
+# Вход: натуральное число n > 1.
+# Выход: множество простых чисел, не превосходящих n.
+def Eratosthenes(n: int):
+    B = set() 
+    B = set(range(2, n + 1)) 
+    while bool(B): 
+        x = min(B) # наименьший элемент B
+        yield x # выдать x
+        B = B.difference({x}) # удалить x из B
+        y = x ** 2 
+        while y <= n: 
+            B = B.difference({y}); y = y + x # удалить из B все числа, кратные x
+```
 
 ## Получение кода
 ```cmd
