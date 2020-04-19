@@ -1,0 +1,39 @@
+{
+    "type": "View",
+    "props": {
+        "style": {
+            "alignItems": "center",
+            "backgroundColor": "#F5FCFF",
+            "flex": 1,
+            "justifyContent": "center"
+        }
+    },
+    "children": [
+        {
+            "type": "Text",
+            "props": {
+                "style": {
+                    "fontSize": 20,
+                    "margin": 10,
+                    "textAlign": "center"
+                }
+            },
+            "children": [
+                "Welcome to React Native!"
+            ]
+        },
+        {
+            "type": "Text",
+            "props": {
+                "style": {
+                    "color": "#333333",
+                    "marginBottom": 5,
+                    "textAlign": "center"
+                }
+            },
+            "children": [
+                "This is a React Native snapshot test."
+            ]
+        }
+    ]
+}
