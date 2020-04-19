@@ -1,0 +1,16 @@
+// Следующий алгоритм Уоршалла вычисляет транзитивное замыкание за O(n^3) шагов.
+Вход: матрица отношения R.
+Выход: матрица замыкания T.
+func Warshall(R : array [1..n, 1..n] of 0..1) : array [1..n, 1..n] of 0..1
+    m := |R|
+	T : array [1..m, 1..m] of 0..1
+	T := R
+	for i from 1 to m do
+		for j from 1 to m do
+			for k from 1 to m do
+				T[j, k] := T[j, k] \vee T[j, i] & T[i, k]
+			end for
+		end for
+	end for
+	return T
+end func
