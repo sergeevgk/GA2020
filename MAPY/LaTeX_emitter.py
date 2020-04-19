@@ -154,7 +154,7 @@ class LaTeXEmitter(MAPYVisitor):
             self.latex += self.get_style_word("%s" % ctx.getText())
 
     def visitTypeT(self, ctx):
-        if ctx.arrayType() is None and ctx.subrangeType() is None and ctx.structureType() is None:
+        if ctx.arrayType() is None and ctx.subrangeType() is None:
             self.latex += self.get_style_word("%s" % ctx.getText())
         else:
             self.visitChildren(ctx)
