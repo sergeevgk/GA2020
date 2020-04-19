@@ -8,7 +8,7 @@ DSL для перевода псевдокода в LaTeX и Python.
 
 ## Как называется DSL?
 
-![MAPY = Mathematics Algorithm PYthon](https://latex.codecogs.com/svg.latex?\mathtt{MAPY}%20=%20\mathtt{M}\mathrm{athematics}%20\%20%20\mathtt{A}\mathrm{lgorithm}%20\%20%20\mathtt{PY}\mathrm{thon})
+![MAPY = Mathematics Algorithm PYthon](https://latex.codecogs.com/svg.latex?\mathtt{MAPY}%20\quad%20=%20\quad%20\mathtt{M}\mathrm{athematics}%20\quad%20\mathtt{A}\mathrm{lgorithm}%20\quad%20\mathtt{PY}\mathrm{thon})
 
 ## Результаты
 
