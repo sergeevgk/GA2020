@@ -29,18 +29,19 @@ def _from_underscore_to_camel_case_f_l(string: str):
     return camel_case_f_l
 
 
-def _print_method(jinja_template: Template, abstract_method: AbstractMethod) -> str:
+def _print_method(jinja_template: Template, abstract_method: AbstractMethod, use_json: bool) -> str:
     arguments_str = ""
     for param in abstract_method.params:
         arguments_str += "%s %s," % (get_language_type(param.type, _TARGET_LANGUAGE), _from_underscore_to_camel_case_f_l(param.name))
     arguments_str = arguments_str[:-1]
     return jinja_template.render(return_type=get_language_type(abstract_method.return_type, _TARGET_LANGUAGE),
                                  method_name=_from_underscore_to_camel_case_f_l(abstract_method.name),
-                                 arguments=arguments_str)
+                                 arguments=arguments_str,
+                                 use_json=use_json)
 
 
-def _print_all_class_methods(jinja_template: Template, abstract_class: AbstractClass) -> str:
-    return ''.join(["%s\n" % _print_method(jinja_template, method) for method in abstract_class.methods])
+def _print_all_class_methods(jinja_template: Template, abstract_class: AbstractClass, use_json: bool) -> str:
+    return ''.join(["%s\n" % _print_method(jinja_template, method, use_json) for method in abstract_class.methods])
 
 
 class JavaAutoGenPlugin(object):
@@ -81,6 +82,7 @@ class JavaAutoGenPlugin(object):
 
         use_json = any([attr.name in _JSON_ATTRIBUTES_NAMES for attr in abstract_class.attrs]) is not None
 
+        setattr(abstract_class, "use_json", use_json)
         autogen_json_functions, _ = collect_all_class_attrs_functions(abstract_class, _TARGET_LANGUAGE)
         partial_attrs_autogen_functions = []
         for func, attr_name in autogen_json_functions:
@@ -91,7 +93,7 @@ class JavaAutoGenPlugin(object):
             partial_func.__name__ = "Autogen function for attribute '%s'" % attr_name
             partial_attrs_autogen_functions.append(partial_func)
 
-        methods_str = _print_all_class_methods(method_template, abstract_class)
+        methods_str = _print_all_class_methods(method_template, abstract_class, use_json)
 
         # ######################## #
         # Render Desc Class Script #

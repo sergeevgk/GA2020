@@ -97,10 +97,12 @@ public class Person {
         
     }
 
+    @JsonIgnore
     public String getCategory() {
         return "staff";
     }
 
+    @JsonIgnore
     public String getName() {
         throw new UnsupportedOperationException();
     }

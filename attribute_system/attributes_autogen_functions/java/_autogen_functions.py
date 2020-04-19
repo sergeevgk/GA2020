@@ -69,4 +69,5 @@ def category_function(abstract_class: AbstractClass):
         if attr.name == _CATEGORY_CLASS_ATTRIBUTE_NAME:
             category_name = '"%s"' % attr.val
             break
-    return _JavaAutogenFunctionsJinja.CATEGORY_TEMPLATE.render(category_name=category_name)
+    return _JavaAutogenFunctionsJinja.CATEGORY_TEMPLATE.render(category_name=category_name,
+                                                               use_json=abstract_class.use_json)

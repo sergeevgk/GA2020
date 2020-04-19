@@ -1,3 +1,6 @@
+    {% if use_json -%}
+    @JsonIgnore
+    {% endif       -%}
     public String getCategory() {
         return {{ category_name }};
     }
