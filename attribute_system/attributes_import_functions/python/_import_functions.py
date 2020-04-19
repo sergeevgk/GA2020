@@ -8,7 +8,3 @@ def json_deserializable_import_function():
 
 def category_import_function():
     return "from .attributes.category_attr import category_class_attribute"
-
-
-def sorted_import_function():
-    return "from .attributes.sorted_attr import sorted_class_attribute"

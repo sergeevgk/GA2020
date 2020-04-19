@@ -1,0 +1,13 @@
+    public void fromJsonString(String jsonString) throws IOException {
+        {{ class_name }} loaded = this.m_mapper.readValue(jsonString, {{ class_name }}.class);
+        {% for prop in props -%}
+        this.{{ prop }} = loaded.{{ prop }};
+        {% endfor %}
+    }
+
+    public void loadFromJson(String pathToLoadFrom) throws IOException {
+        {{ class_name }} loaded = this.m_mapper.readValue(new File(pathToLoadFrom), {{ class_name }}.class);
+        {% for prop in props -%}
+        this.{{ prop }} = loaded.{{ prop }};
+        {% endfor %}
+    }

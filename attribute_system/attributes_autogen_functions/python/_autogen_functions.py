@@ -15,13 +15,3 @@ def category_function(abstract_class: AbstractClass):
             category_name = attr.val
             break
     return "@category_class_attribute(name='%s')" % category_name
-
-
-def sorted_function(abstract_class: AbstractClass):
-    props = abstract_class.properties
-    sorted_props_names = []
-    for prop in props:
-        prop_attrs_names = [attr.name for attr in prop.attrs]
-        if "sorted" in prop_attrs_names:
-            sorted_props_names.append(prop.name)
-    return "@sorted_class_attribute(vars_names=%s)" % str(sorted_props_names)

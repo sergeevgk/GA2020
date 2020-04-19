@@ -26,5 +26,5 @@ class Person
   [static]
   int twelve
 
-  string get_name()
+  str get_name()
 }

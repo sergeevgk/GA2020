@@ -1,0 +1,7 @@
+    public String toJsonString() throws IOException {
+        return this.m_mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+    }
+
+    public void saveToJson(String pathToSaveTo) throws IOException {
+        this.m_mapper.writerWithDefaultPrettyPrinter().writeValue(new File(pathToSaveTo), this);
+    }

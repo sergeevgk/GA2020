@@ -2,15 +2,11 @@ types:
   python:
     int: int
     bool: bool
-    list: list
-    dict: dict
     float: float
-    string: str
+    str: str
 
   java:
-    int:
-    bool:
-    list:
-    dict:
-    float:
-    string:
+    int: Integer
+    bool: Boolean
+    float: Float
+    str: String

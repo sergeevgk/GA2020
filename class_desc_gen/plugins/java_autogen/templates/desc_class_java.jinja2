@@ -1,0 +1,48 @@
+import java.io.File;
+import java.io.IOException;
+{% if use_json                                       -%}
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+{% endif                                              %}
+{% if use_json                                       -%}
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties({ {{ ignore_props_names }} })
+{% endif                                             -%}
+public class {{ class_name_camel_case }} {
+{%- for prop in class_static_properties              -%}
+{%  if prop.const is false                            %}
+    public static {{ prop.type }} {{ prop.camel_case_name_f_l }} = {{ prop.val }};
+{%  else                                              %}
+    public static final {{ prop.type }} {{ prop.camel_case_name_f_l }} = {{ prop.val }};
+{%- endif                                            -%}
+{%- endfor                                           -%}
+{%- for prop in class_properties                     -%}
+{%  if prop.const is false                            %}
+    public {{ prop.type }} {{ prop.camel_case_name_f_l }} = {{ prop.val }};
+{%  else                                              %}
+    public final {{ prop.type }} {{ prop.camel_case_name_f_l }} = {{ prop.val }};
+{%- endif                                            -%}
+{%  endfor                                            %}
+{%- if use_json                                       %}
+    @JsonIgnore
+    private final ObjectMapper m_mapper = new ObjectMapper();
+{% endif                                             -%}
+{%  for prop in class_properties                      %}
+    public {{ prop.type }} get{{ prop.camel_case_name }}() {
+        return this.{{ prop.camel_case_name_f_l }};
+    }
+{%  if prop.const is false                            %}
+    public void set{{ prop.camel_case_name }}({{ prop.type }} {{ prop.camel_case_name_f_l }}) {
+        this.{{ prop.camel_case_name_f_l }} = {{ prop.camel_case_name_f_l }};
+    }
+{{-   "\n"                                           -}}
+{%- endif                                            -%}
+{%-  endfor                                          -%}
+{% for autogen_func in attrs_autogen_functions        %}
+{{ autogen_func()                                     }}
+{% endfor                                             %}
+{{ methods_str                                       -}}
+}

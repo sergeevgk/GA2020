@@ -11,7 +11,7 @@ plugins:
     output_dir_name: PYTHON_AUTOGEN
 
   java:
-    enable: false
+    enable: true
     description: Generating source code on Java language
     clazz: class_desc_gen.plugins.java_autogen.plugin.JavaAutoGenPlugin
     output_dir_name: JAVA_AUTOGEN
