@@ -73,6 +73,10 @@ class Person
 1. `examples\autogen\example_1\PYTHON_AUTOGEN` - директория, в которой лежит автосгенерированный код на языке `Python`. (Ссылка для быстрого доступа: https://github.com/sergeevgk/GA2020/tree/ClassDesc/examples/autogen/example_1/PYTHON_AUTOGEN).
 2. `examples\autogen\example_1\JAVA_AUTOGEN` - директория, в которой лежит автосгенерированный код на языке `Java`. (Ссылка для быстрого доступа: https://github.com/sergeevgk/GA2020/tree/ClassDesc/examples/autogen/example_1/JAVA_AUTOGEN).
 
-# Планы на будущее
+# Возможное развитие проекта
 * Собрать `exe` данного проекта.
 * Сделать плагины для `PyCharm` и `Intellij IDEA`, чтобы можно было удобно вызывать наш продукт прямо в среде разработки.
+
+# Авторы
+* Павел Денисов @Ppasha9 (pavelvan50@gmail.com)
+* Туников Дмитрий @DmitriiTunikov (dima.tunikov@mail.ru)
