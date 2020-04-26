@@ -65,7 +65,7 @@ IntelliJ IDEA Plugin to simplify design pattern usage. Using DSL method.
 4. Получить сгенерированный код, дополнить его в своих целях
 
 ## Блок-схема работы плагина
-![](https://github.com/sergeevgk/GA2020/blob/E-%3D-pc/diagrams/uml_state.jpg)
+![](https://github.com/sergeevgk/GA2020/blob/E-%3D-pc/diagrams/blok-skhema.jpg)
 
 ФАН: Ой! Это ни в коем случае не диаграмма состояний, это блок-схема в обозначениях ГОСТа 1978 года. Ужас! 
 
