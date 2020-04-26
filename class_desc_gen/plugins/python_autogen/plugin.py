@@ -1,17 +1,15 @@
 import os
 import shutil
 
-from collections import namedtuple
-from typing import List, Tuple, Dict, Callable
 from functools import partial
 from jinja2 import Environment, FileSystemLoader
 
 from abstract_class.absract_class import AbstractClass, AbstractMethod
 from class_desc_gen._config_parser import _PluginParams
 from class_desc_gen.types_converter import get_language_type
-from attribute_system import get_attribute_autogen_function, get_attribute_options, get_attribute_import_function
-
-from class_desc_gen.plugins.python_autogen.types import from_string_to_built_in_type
+from class_desc_gen.plugins import collect_properties_attributes, collect_properties_types, collect_properties_names
+from class_desc_gen.plugins import collect_properties, collect_static_properties
+from class_desc_gen.plugins import collect_all_class_attrs_functions
 
 
 _JINJA_TEMPLATES_DIR_PATH = "./class_desc_gen/plugins/python_autogen/templates"
@@ -22,92 +20,6 @@ _PYTHON_ATTRIBUTES_IMPLEMENTATIONS_DIR_PATH = "./attribute_system/attributes_imp
 _PYTHON_SUPPORT_SCRIPTS_IMPLEMENTATIONS_DIR_PATH = "./class_desc_gen/plugins/python_autogen/scripts"
 
 _TARGET_LANGUAGE = "python"
-
-_STATIC_VAR_ATTRIBUTE_NAME = "static"
-_CONST_VAR_ATTRIBUTE_NAME = "const"
-
-_JINJA_PROPERTY = namedtuple("_JINJA_PROPERTY", ["name", "val", "const"])
-
-
-def _collect_all_class_attrs_functions(abstract_class: AbstractClass) -> Tuple[List[Tuple[Callable, str]], List[Callable]]:
-    class_attrs_autogen_functions = []
-    class_attrs_import_function = []
-    for class_attr in abstract_class.attrs:
-        class_attrs_autogen_functions.append((get_attribute_autogen_function(attribute_name=class_attr.name,
-                                                                             target_lan=_TARGET_LANGUAGE),
-                                              class_attr.name))
-        class_attrs_import_function.append(get_attribute_import_function(attribute_name=class_attr.name,
-                                                                         target_lan=_TARGET_LANGUAGE))
-
-    for cur_prop in abstract_class.properties:
-        for attr in cur_prop.attrs:
-            attr_options = get_attribute_options(attribute_name=attr.name, target_lan=_TARGET_LANGUAGE)
-            if attr_options["is_class_attribute"]:
-                class_attrs_autogen_functions.append((get_attribute_autogen_function(attribute_name=attr.name,
-                                                                                     target_lan=_TARGET_LANGUAGE),
-                                                      attr.name))
-                class_attrs_import_function.append(get_attribute_import_function(attribute_name=attr.name,
-                                                                                 target_lan=_TARGET_LANGUAGE))
-
-    return class_attrs_autogen_functions, class_attrs_import_function
-
-
-def _collect_properties_names(abstract_class: AbstractClass) -> List[str]:
-    return [prop.name for prop in abstract_class.properties]
-
-
-def _collect_properties_types(abstract_class: AbstractClass) -> Dict:
-    res = dict()
-    for prop in abstract_class.properties:
-        res[prop.name] = prop.type
-    return res
-
-
-def _collect_properties_attributes(abstract_class: AbstractClass) -> Dict:
-    res = {}
-    for prop in abstract_class.properties:
-        cur_attrs = dict()
-        for attr in prop.attrs:
-            cur_attrs[attr.name] = str(attr.val)
-        res[prop.name] = cur_attrs
-    return res
-
-
-def _collect_properties_with_static_flag(abstract_class: AbstractClass, static_flag: bool) -> List[_JINJA_PROPERTY]:
-    res = []
-    for prop in abstract_class.properties:
-        val = None
-        is_const = False
-        is_static = False
-
-        for attr in prop.attrs:
-            if attr.name == _STATIC_VAR_ATTRIBUTE_NAME:
-                is_static = True
-
-            if attr.name == _CONST_VAR_ATTRIBUTE_NAME:
-                is_const = True
-                val = attr.val
-                break
-
-        if is_static != static_flag:
-            continue
-
-        if val is not None:
-            val_built_in_type = from_string_to_built_in_type(prop.type)
-            val = val_built_in_type(val)
-
-        if isinstance(val, str):
-            val = '"%s"' % val
-        res.append(_JINJA_PROPERTY(name=prop.name, val=val, const=is_const))
-    return res
-
-
-def _collect_static_properties(abstract_class: AbstractClass) -> List[_JINJA_PROPERTY]:
-    return _collect_properties_with_static_flag(abstract_class=abstract_class, static_flag=True)
-
-
-def _collect_properties(abstract_class: AbstractClass) -> List[_JINJA_PROPERTY]:
-    return _collect_properties_with_static_flag(abstract_class=abstract_class, static_flag=False)
 
 
 def _print_method(abstract_method: AbstractMethod) -> str:
@@ -154,16 +66,19 @@ class PythonAutoGenPlugin(object):
         # Support variables for jinja2 rendering #
         # ###################################### #
 
-        properties_names = _collect_properties_names(abstract_class=abstract_class)
-        properties_types = _collect_properties_types(abstract_class=abstract_class)
-        properties_attributes = _collect_properties_attributes(abstract_class=abstract_class)
+        properties_names = collect_properties_names(abstract_class=abstract_class)
+        properties_types = collect_properties_types(abstract_class=abstract_class)
+        properties_attributes = collect_properties_attributes(abstract_class=abstract_class)
 
-        class_static_properties = _collect_static_properties(abstract_class=abstract_class)
-        class_properties = _collect_properties(abstract_class=abstract_class)
+        class_static_properties = collect_static_properties(abstract_class=abstract_class, target_lan=_TARGET_LANGUAGE)
+        class_properties = collect_properties(abstract_class=abstract_class, target_lan=_TARGET_LANGUAGE)
 
-        class_attrs_autogen_functions, class_attrs_import_functions = _collect_all_class_attrs_functions(abstract_class)
+        class_attrs_autogen_functions, class_attrs_import_functions = collect_all_class_attrs_functions(abstract_class, _TARGET_LANGUAGE)
         partial_attrs_autogen_functions = []
         for func, attr_name in class_attrs_autogen_functions:
+            if func is None:
+                continue
+
             partial_func = partial(func, abstract_class=abstract_class)
             partial_func.__name__ = "Autogen function for attribute '%s'" % attr_name
             partial_attrs_autogen_functions.append(partial_func)

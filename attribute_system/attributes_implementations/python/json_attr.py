@@ -2,7 +2,8 @@ import os
 import json
 
 _VAR_NOT_SERIALIZABLE_ATTR_NAME = "not_serializable"
-_VAR_CONST_SERIALIZABLE_ATTR_NAME = "const"
+_VAR_CONST_ATTR_NAME = "const"
+_VAR_STATIC_ATTR_NAME = "static"
 
 
 class JsonException(Exception):
@@ -14,7 +15,8 @@ def json_serializable_class_attribute(class_to_dec):
         dict_to_save = dict()
         for prop_name in self._abstract_class.iter_properties_names():
             if self._abstract_class.has_prop_attribute(prop_name, _VAR_NOT_SERIALIZABLE_ATTR_NAME) or\
-               self._abstract_class.has_prop_attribute(prop_name, _VAR_CONST_SERIALIZABLE_ATTR_NAME):
+               self._abstract_class.has_prop_attribute(prop_name, _VAR_CONST_ATTR_NAME) or\
+               self._abstract_class.has_prop_attribute(prop_name, _VAR_STATIC_ATTR_NAME):
                 continue
 
             dict_to_save[prop_name] = str(getattr(self, prop_name))
@@ -36,7 +38,8 @@ def json_deserializable_class_attribute(class_to_dec):
 
         for prop_name in self._abstract_class.iter_properties_names():
             cur_prop_built_in_type = self._abstract_class.get_property_built_in_type(prop_name)
-            if self._abstract_class.has_prop_attribute(prop_name, _VAR_CONST_SERIALIZABLE_ATTR_NAME):
+            if self._abstract_class.has_prop_attribute(prop_name, _VAR_CONST_ATTR_NAME) or\
+               self._abstract_class.has_prop_attribute(prop_name, _VAR_STATIC_ATTR_NAME):
                 continue
 
             if self._abstract_class.has_prop_attribute(prop_name, _VAR_NOT_SERIALIZABLE_ATTR_NAME):

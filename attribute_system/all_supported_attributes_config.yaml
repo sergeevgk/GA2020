@@ -1,44 +1,21 @@
 attributes:
   json_serializable:
     python:
-      module_path: ./attribute_system/attributes/python/_json.py
-      method_name: json_serializable_attribute
       autogen_function: attribute_system.attributes_autogen_functions.python.json_serializable_function
       import_function: attribute_system.attributes_import_functions.python.json_serializable_import_function
-      is_class_attribute: true
+    java:
+      autogen_function: attribute_system.attributes_autogen_functions.java.json_serializable_function
 
   json_deserializable:
     python:
-      module_path: ./attribute_system/attributes/_json.py
-      method_name: json_deserializable_attribute
       autogen_function: attribute_system.attributes_autogen_functions.python.json_deserializable_function
       import_function: attribute_system.attributes_import_functions.python.json_deserializable_import_function
-      is_class_attribute: true
+    java:
+      autogen_function: attribute_system.attributes_autogen_functions.java.json_deserializable_function
 
   category:
     python:
-      module_path: ./attribute_system/attributes/_category.py
-      method_name: category_class_attribute
       autogen_function: attribute_system.attributes_autogen_functions.python.category_function
       import_function: attribute_system.attributes_import_functions.python.category_import_function
-      is_class_attribute: true
-
-  sorted:
-    python:
-      module_path: ./attribute_system/attributes/_sorted.py
-      method_name: sorted_class_attribute
-      autogen_function: attribute_system.attributes_autogen_functions.python.sorted_function
-      import_function: attribute_system.attributes_import_functions.python.sorted_import_function
-      is_class_attribute: true
-
-  not_serializable:
-    python:
-      is_class_attribute: false
-
-  static:
-    python:
-      is_class_attribute: false
-
-  const:
-    python:
-      is_class_attribute: false
+    java:
+      autogen_function: attribute_system.attributes_autogen_functions.java.category_function
