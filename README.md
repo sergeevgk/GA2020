@@ -1,6 +1,8 @@
 # Easy-Pattern-Constructor
 IntelliJ IDEA Plugin to simplify design pattern usage. Using DSL method.
 
+ФАН: автор, дата, статус
+
 ## Запуск и установка
 
 1. Клонировать ветку "E=pc"
@@ -9,8 +11,12 @@ IntelliJ IDEA Plugin to simplify design pattern usage. Using DSL method.
 4. В gradle выбрать task "runIDE", запустить его
 5. Готово. Открыто новое окно IntelliJ IDEA с установленным плагином. Теперь можно его протестировать (см. примеры ниже)
 
+ФАН: Хм. Снчала купить, а потом начать думать, зачем это нужно ...
+
 ## Постановка задачи
 Пользователь (программист на java) устанавливает плагин. В процессе разработки он сможет быстро создать шаблон проектирования, а затем дополнить его для своей задачи. 
+
+ФАН: неточные слова. Программист на Java за всю свою жизнь хорошо если создаст хоть один свой шаблон проектирования. Обычно он использует готовые.
 
 *Шаблоном проектирования* будем называть подмножество *design patterns* и *idioms* (терминология согласно [UML3](https://uml3.ru/library/design_patterns/design_patterns.html))
 
@@ -25,6 +31,8 @@ IntelliJ IDEA Plugin to simplify design pattern usage. Using DSL method.
 
 ## Диаграмма использования
 ![](https://github.com/sergeevgk/GA2020/blob/E-%3D-pc/diagrams/uml_use_case.JPG)
+
+ФАН: понятно
 
 ## Описание GUI пользователя
 
@@ -49,3 +57,5 @@ IntelliJ IDEA Plugin to simplify design pattern usage. Using DSL method.
 ### Visitor
 ![](https://github.com/sergeevgk/GA2020/blob/E-%3D-pc/gifs/visitor.gif)
 
+
+ФАН: демо ролики - преаосходно! Но где же "method DSL" ??? Как происходит генерация кода?
