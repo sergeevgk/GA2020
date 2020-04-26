@@ -46,6 +46,8 @@ IntelliJ IDEA Plugin to simplify design pattern usage. Using DSL method.
 ## Диаграмма состояний
 ![](https://github.com/sergeevgk/GA2020/blob/E-%3D-pc/diagrams/uml_state.jpg)
 
+ФАН: Ой! Это ни в коем случае не диаграмма состояний, это блок-схема в обозначениях ГОСТа 1978 года. Ужас! 
+
 ## Примеры
 
 ### Singleton
