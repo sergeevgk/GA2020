@@ -93,6 +93,21 @@
 | **special characters** | `(?all visible characters?)` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/special_characters.jpg)
 | **comments** | `(*comment*)` |
 
+##Пример работы программы 
+
+#### Пример №1
+```
+<signed number> ::= [ '+' | '-' ] ['1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9']+ ['0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9']*
+```
+![Output](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/example_output.jpg)
+
+#### Пример №2
+
+```
+<identifier> = letter , { letter | digit | "_" } 
+```
+![Output2](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/example_output2.jpg)
+
 ##### Авторы:
 *  *Лавриченко Ольга* - разработчик, студентка СПб ПУ
 *  *Павел Кононов* - разработчик, студент СПб ПУ
