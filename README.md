@@ -88,8 +88,8 @@
 |  | ` N * ['expression'] ` |  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/repetition3.jpg)|
 |  | ` N * 'expression'? ` |  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/repetition3.jpg)|
 | **grouping** | `('expression1' 'expression2')` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/concatenation.jpg)|
-| **literal** |`'expression'`| ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/literal.jpg)|
-|  | `"expression"`|  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/literal.jpg)|
+| **literal** |`'literal'`| ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/literal.jpg)|
+|  | `"literal"`|  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/literal.jpg)|
 | **special characters** | `(?all visible characters?)` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/special_characters.jpg)
 | **comments** | `(*comment*)` |
 
