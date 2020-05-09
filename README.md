@@ -93,7 +93,7 @@
 | **special characters** | `(?all visible characters?)` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/special_characters.jpg)
 | **comments** | `(*comment*)` |
 
-##Пример работы программы 
+## Пример работы программы 
 
 #### Пример №1
 ```
