@@ -75,22 +75,22 @@
 | **definition**  |  `=`  | 
 |  |  `:=`  | 
 | |  `::=`   | 
-| **concatenation** |   `'expression1' , 'expression2'`    |   
-|  |    `'expression1' 'expression2'`    |   
+| **concatenation** |   `'expression1' , 'expression2'`    |   ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/concatenation.jpg)|
+|  |    `'expression1' 'expression2'`    |   ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/concatenation.jpg)|
 | **termination** | `;` |
-| **alternation** |`'expression1' | 'expression2'` |
-| **option** | `  ['expression']` |
-| |`'expression'? ` |
-| **repetition** | `{'expression'}` |
-|  | `'expression'* `|
-|  | `'expression'+ ` |
-|  | `N * 'expression' ` |
-|  | ` N * ['expression'] ` |
-|  | ` N * 'expression'? ` |
-| **grouping** | `('expression1' 'expression2')` |
-| **literal** |`'expression'`|
-|  | `"expression"`|
-| **special characters** | `(?all visible characters?)` |
+| **alternation** |`'expression1'\|'expression2'` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/alternation.jpg)
+| **option** | `  ['expression']` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/option.jpg)|
+| |`'expression'? ` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/option.jpg)|
+| **repetition** | `{'expression'}` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/repetition1.jpg)|
+|  | `'expression'* `|  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/repetition1.jpg)|
+|  | `'expression'+ ` |  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/repetition4.jpg)|
+|  | `N * 'expression' ` |  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/repetition2.jpg)|
+|  | ` N * ['expression'] ` |  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/repetition3.jpg)|
+|  | ` N * 'expression'? ` |  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/repetition3.jpg)|
+| **grouping** | `('expression1' 'expression2')` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/concatenation.jpg)|
+| **literal** |`'expression'`| ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/literal.jpg)|
+|  | `"expression"`|  ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/literal.jpg)|
+| **special characters** | `(?all visible characters?)` | ![](https://github.com/sergeevgk/GA2020/blob/DiagramVirta/addition_images/special_characters.jpg)
 | **comments** | `(*comment*)` |
 
 ##### Авторы:
