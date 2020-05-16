@@ -35,9 +35,8 @@ DSL для перевода псевдокода в LaTeX и Python.
 
 ## Что полезного делает DSL во внешнем мире?
 
-![Диаграмма использования](http://www.plantuml.com/plantuml/svg/dP0nIiH058RxESKhJJ4vm23B7i32mi9sSMVTm9g1-2o4BIGBMhg5bI0s7Y2kYGpHv0p_tCWVj12qKQPwytt_6-QVdkkiqekpbLdvXOe6gOhJfSgygFo95g4q3ayvjZaUSYVMhYVYiCKkrHZJbJFV1s8xaJqyfWsUyOQ87aswHaotWeONBw36iSOxHkooNzDtH7tQKEama4L6AAF1m3EY4-frkg7oYXQK4D5bvjz9sLzRouVlgRIPAOFwhnB2uY-_4IS7ioD__6F3vsBYmqjTij6fB-Ti_0C0)
+![Диаграмма использования](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuSf9JIjHACbNACfCpoXHICaiIaqkoSpFuxAwi4JlmWIz2tFrh1HqTMli5AmkJBYmwMBJXNqN6woua3WWQLqx1OqBaoxikx3_mcwWMEU5hHVsNjXnOQl2XVqN6u6SJHUs02Lt0V6M2niqkKXGgs1JewiBD7moMDdMYmqNDbnikx3ZOh-2Js98QWILp0geBCd8pzFaoiilIOM6H7uQ7biLh20C0XeGHWDrG5bS3gbvAS201m00)
 
-ФАН: на самом деле варианты использования симметричны и равноправны, и в том и в другом случае из псевдокода получается код, который может быть исполнен. Только это разные языки кодирования: LaTeX - Python и разные результаты выполнения. Советую один абстрактный вариант использования Воплощение псевдокода и от него наследуются два конкретных варианта: Генерация ТеХа и Генерация Питона.
 ## Как называется DSL?
 
 ![MAPY = Mathematics Algorithm PYthon](https://latex.codecogs.com/svg.latex?\mathtt{MAPY}%20\quad%20=%20\quad%20\mathtt{M}\mathrm{athematics}%20\quad%20\mathtt{A}\mathrm{lgorithm}%20\quad%20\mathtt{PY}\mathrm{thon})
