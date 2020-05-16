@@ -1,0 +1,29 @@
+func n_char(a : char) : 1..n
+    for i from 1 to n do
+        if alphabet[i] = a then return i end if
+    end for
+end func
+
+func a_char(i : 1..n) : char
+    return alphabet[i]
+end func
+
+func n_string(alpha : string) : int
+    i := 0
+    for j from 1 to |alpha| do
+        i := n * i + n_char(alpha[j])
+    end for
+    return i
+end func
+
+func a_string(i : int) : string
+    alpha : string
+    a : char
+    alpha := \varepsilon
+    while i > 0 do
+        if i mod n = 0 then a := a_char(n); i := i - n
+        else a := a_char(i mod n) end if
+        alpha := a + alpha; i := i div n
+    end while
+    return alpha
+end func

@@ -1,0 +1,68 @@
+
+heap = struct { arr : array [1..n] of real; len : int }
+
+// Восстановление свойства кучи
+Вход: куча A, индекс i.
+Выход: восстанавливается свойство кучи в поддереве с корнем A[i], причём левое и правое поддеревья имеют свойства кучи.
+func Heapify(A : heap, i : int)
+    l := 2 * i; r := 2 * i + 1; m := i //инициализация
+    if (l \leq A.len) & (A.arr[l] > A.arr[i]) then
+        m := l
+    end if
+    if (r \leq A.len) & (A.arr[r] > A.arr[m]) then
+        m := r
+    end if
+    if i \neq m then
+        A.arr[i] \leftrightarrow A.arr[m] //транспозиция элементов массива
+        Heapify(A, m)
+    end if
+end func
+
+
+// Построение кучи
+Вход: куча A
+Выход: устанавливается свойство кучи в дереве, заданным массивом A.arr
+func MakeHeap(A : heap)
+    for i from \lfloor A.len / 2 \rfloor downto 1 do Heapify(A, i) end for
+end func
+
+
+// Изменение значения элемента кучи
+Вход: куча A, индекс изменяемого элемента i, новое значение k.
+Выход: значение элемента с индексом i изменяется на k без нарушения свойств двоичной кучи.
+func IncElt(A : heap, i : int, k : real)
+    if k < A.arr[i] then
+        return fail //новое значение не должно быть меньше
+    end if
+    A.arr[i] := k
+    while (i > 1) & (A.arr[\lfloor i / 2 \rfloor] < A.arr[i]) do
+        A.arr[i] \leftrightarrow A.arr[\lfloor i / 2 \rfloor] //транспозиция элементов
+        i := \lfloor i / 2 \rfloor
+    end while
+end func
+
+
+// Вставка нового элемента в кучу
+Вход: куча A, новый элемент k.
+Выход: в кучу добавляется элемент со значением k без нарушения свойств двоичной кучи.
+func InsElt(A : heap, k : real)
+    if A.len = |A.arr| then
+        return fail // весь массив заполнен
+    end if
+    A.len := A.len + 1
+    A.arr[A.len] := -\infty
+    IncElt(A, A.len, k)
+end func
+
+
+// Извлечение максимального элемента из кучи
+Вход: куча A
+Выход: извлечение максимального элемента из кучи с сохранением свойств двоичной кучи
+func GetMax(A : heap) : real
+    if A.len = 0 then return fail end if //куча пуста
+    m := A.arr[1] //сохранение значения корневого элемента
+    A.arr[1] := A.arr[A.len] //копирование последнего элемента в корень дерева
+    A.len := A.len - 1 //уменьшение длины массива
+    Heapify(A, 1)
+    return m
+end func

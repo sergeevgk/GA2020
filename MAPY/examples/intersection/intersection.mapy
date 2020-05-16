@@ -1,0 +1,13 @@
+
+// возвращает все элементы из X \cap Y
+Вход: множества X и Y
+func intersection(X : set, Y : set)
+    for x \in X do
+        for y \in Y do
+            if x = y then
+                yield x // возвращаем x
+                break
+            end if
+        end for
+    end for
+end func
