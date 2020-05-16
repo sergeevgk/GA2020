@@ -1,16 +1,16 @@
 grammar MAPY;
 
-mapy: (newline | func | typedef)* (EOF)? ;
+mapy: (newline | func | typedef)* (EOF)? ;  // файл состоит из функций и определений структур
 newline: NEWLINE ;
 
-typedef: identifier EQUAL structureType ;
+typedef: identifier EQUAL structureType ;  // определение структуры
 
-func: functionСomment* functionDescription functionDeclaration ;
+func: functionСomment* functionDescription functionDeclaration ;  // функция
 
 functionСomment: commentLine newline ;
-commentLine: COMMENT_LINE ;
+commentLine: COMMENT_LINE ;  // выражение с комментарием
 
-functionDescription: (functionInput newline)? (functionOutput newline)? ;
+functionDescription: (functionInput newline)? (functionOutput newline)? ; // "Вход" и "Выход"
 functionOutput: FUNCTION_OUTPUT ;
 functionInput: FUNCTION_INPUT ;
 
@@ -19,47 +19,47 @@ functionDeclaration: FUNCTION identifier formalParameterList (COLON typeIdentifi
 identifier: IDENT ;
 identifierList: identifier (COMMA identifier)* ;
 
-formalParameterList: LPAREN (parameter (COMMA parameter)*)? RPAREN ;
+formalParameterList: LPAREN (parameter (COMMA parameter)*)? RPAREN ;  // перечисление переменных и их типов в виде "arg1 : type1, arg2 : type2"
 parameter: identifier COLON typeIdentifier ;
-typeIdentifier: typeT | identifier | (CHAR | INTEGER | REAL | STRING) ;
-typeIdentifierList: typeIdentifier (COMMA typeIdentifier)* ;
+typeIdentifier: typeT | identifier | (CHAR | INTEGER | REAL | STRING) ;  // названия типов переменных
+typeIdentifierList: typeIdentifier (COMMA typeIdentifier)* ;  // просто перечесление типов "type1, type2"
 
-suite: simpleStatement | newline statement+ ;
-statement: (simpleStatement | structuredStatement) newline ;
+suite: simpleStatement | newline statement+ ;  // основной блок выражений, который находится внутри "func", "if", "while" и т.п.
+statement: (simpleStatement | structuredStatement) newline ;  // блок выражений
 
-simpleStatement: smallStatement (SEMI smallStatement)* (commentLine)? ;
-smallStatement: assignmentStatement | procedureStatement | flowStatement | selectStatement | swapStatement | arrowStatement | globalStatement | emptyStatement | parameter ;
+simpleStatement: smallStatement (SEMI smallStatement)* (commentLine)? ;  // перечисление простых выражений в одну строчку с возможностью комментирования в конце строки
+smallStatement: assignmentStatement | procedureStatement | flowStatement | selectStatement | swapStatement | arrowStatement | globalStatement | emptyStatement | parameter ;  // простые несоставные выражения
 
-flowStatement: breakStatement | continueStatement | returnStatement | yieldStatement | stopStatement ;
+flowStatement: breakStatement | continueStatement | returnStatement | yieldStatement | stopStatement ;  // выражения, которые относятся к потоку выполнения
 breakStatement: BREAK ;
 continueStatement: CONTINUE ;
 returnStatement: RETURN ((parameterList)? | FAIL) ;
 yieldStatement: YIELD parameterList ;
 stopStatement: STOP ;
 
-selectStatement: SELECT identifier IN variable ;
+selectStatement: SELECT identifier IN variable ; // выражение select
 
-globalStatement: GLOBAL identifierList ;
+globalStatement: GLOBAL identifierList ; // выражение global
 
-arrowStatement: identifier (LARROW | RARROW) variable ;
+arrowStatement: identifier (LARROW | RARROW) variable ;  // стрелочные выражения для извлечения из/добавления в стек и очередь
 
-swapStatement: variable SWAP variable ;
+swapStatement: variable SWAP variable ;  // выражение swap
 
-emptyStatement: ;
+emptyStatement: ;  // пустая строка
 
-procedureStatement: functionDesignator;
+procedureStatement: functionDesignator;  // вызов функции
 
-assignmentStatement: variable ASSIGN (setExpression | topExpression | expression) ;
-variable: identifier (LBRACK parameterList RBRACK | DOT identifier )* ;
-expression: orExpression (relationalOperator expression)? ;
-orExpression: xorExpression (orOperator orExpression)? ;
-xorExpression: andExpression (xorOperator xorExpression)? ;
-andExpression: additiveExpression (andOperator andExpression)? ;
-additiveExpression: multiplicativeExpression (additiveOperator additiveExpression)? ;
-multiplicativeExpression: signedFactor (multiplicativeOperator multiplicativeExpression)? ;
-signedFactor: sign? powerFactor ;
+assignmentStatement: variable ASSIGN (setExpression | topExpression | expression) ;  // присваивание
+variable: identifier (LBRACK parameterList RBRACK | DOT identifier )* ;  // выражение переменной. может быть как обращение к массиву, так и обращение к стрктуре, или и то и другое
+expression: orExpression (relationalOperator expression)? ;  // выражение с оператором сравнения
+orExpression: xorExpression (orOperator orExpression)? ;  // выражение с оператором "или"
+xorExpression: andExpression (xorOperator xorExpression)? ;  // выражение с оператором "исключающее или"
+andExpression: additiveExpression (andOperator andExpression)? ;  // выражение с оператором "и"
+additiveExpression: multiplicativeExpression (additiveOperator additiveExpression)? ;  // выражение с аддитивным оператором
+multiplicativeExpression: signedFactor (multiplicativeOperator multiplicativeExpression)? ;  // выражение с мультипликативным оператором
+signedFactor: sign? powerFactor ;  // выражение со знаком
 sign: PLUS | MINUS ;
-powerFactor: factor (powerOperator powerFactor)? ;
+powerFactor: factor (powerOperator powerFactor)? ;  // выражение с оператором "возведение в степень"
 powerOperator: POWER ;
 multiplicativeOperator: STAR | SLASH | DIV | MOD ;
 additiveOperator: PLUS | MINUS ;
@@ -67,36 +67,36 @@ andOperator: AND | INTERSECTION | SETMINUS ;
 xorOperator: XOR ;
 orOperator: OR | UNION ;
 relationalOperator: EQUAL | NOT_EQUAL | LT | LE | GE | GT | IN | NOT_IN;
-factor: variable | LPAREN expression RPAREN | roundExpression | lengthExpression | functionDesignator | unsignedConstant | setExpression ;
-roundExpression: LCEIL expression RCEIL | LFLOOR expression RFLOOR | LBRACK expression RBRACK ;
-lengthExpression: VSLASH expression VSLASH ;
-functionDesignator: (identifier | MIN | MAX) LPAREN parameterList? RPAREN ;
-parameterList: expression (COMMA expression)* ;
+factor: variable | LPAREN expression RPAREN | roundExpression | lengthExpression | functionDesignator | unsignedConstant | setExpression ;  // выражения, к которым могут применяться операторы
+roundExpression: LCEIL expression RCEIL | LFLOOR expression RFLOOR | LBRACK expression RBRACK ;  // выражения с округлением
+lengthExpression: VSLASH expression VSLASH ;  // выражение для получения мощности
+functionDesignator: (identifier | MIN | MAX) LPAREN parameterList? RPAREN ;  // вызов функции. встроены функции "min" и "max"
+parameterList: expression (COMMA expression)* ;  // перечисление выражений для вызова функция, обращения к массиву и выражений, связанных с потоком
 unsignedConstant: unsignedNumber | char | string ;
 unsignedNumber: unsignedInteger | unsignedReal ;
 unsignedInteger: NUM_INT ;
 unsignedReal: NUM_REAL | INFINITY;
 char: CHAR_LITERAL ;
 string: STRING_LITERAL | EMPTY_STRING ;
-setExpression: (LCURLY elementList RCURLY) | emptySet ;
+setExpression: (LCURLY elementList RCURLY) | emptySet ;  // определение "множества"
 emptySet: EMPTY_SET ;
-topExpression: TOP variable ;
+topExpression: TOP variable ;  // получение верхнего элемента стека
 
-structuredStatement: (ifStatement | repetetiveStatement) (commentLine)? ;
-repetetiveStatement: whileStatement | repeatStatement | forStatement ;
-whileStatement: WHILE expression DO suite END WHILE;
-repeatStatement: REPEAT suite UNTIL expression ;
-forStatement: FOR (forInStatement | forToStatement) DO suite END FOR ;
-forInStatement: identifier IN variable ;
-forToStatement: identifier FROM expression (TO | DOWNTO) expression ;
-ifStatement: IF expression THEN suite ((newline)? ELSEIF expression THEN suite)* ((newline)? ELSE suite)? END IF ;
+structuredStatement: (ifStatement | repetetiveStatement) (commentLine)? ;  // составные выражения
+repetetiveStatement: whileStatement | repeatStatement | forStatement ;  // выражения для повторения одних и тех же операций
+whileStatement: WHILE expression DO suite END WHILE;  // while .. do .. end while
+repeatStatement: REPEAT suite UNTIL expression ;  // repeat .. until ..
+forStatement: FOR (forInStatement | forToStatement) DO suite END FOR ;  // for .. do .. end for
+forInStatement: identifier IN variable ;  // x in X
+forToStatement: identifier FROM expression (TO | DOWNTO) expression ;  // i from .. to/downto ..
+ifStatement: IF expression THEN suite ((newline)? ELSEIF expression THEN suite)* ((newline)? ELSE suite)? END IF ;  // выражение с оператором условия
 
-typeT: subrangeType | arrayType | setType | queueType | stackType ;
-subrangeType: expression DOTDOT expression ;
-arrayType: ARRAY LBRACK subrangeTypeList RBRACK OF componentType ;
-subrangeTypeList: subrangeType (COMMA subrangeType)* ;
-structureType: STRUCT LCURLY structureTypeList RCURLY ;
-structureTypeList: (newline)? parameter ((newline | SEMI) parameter)* ;
+typeT: subrangeType | arrayType | setType | queueType | stackType ;  // встроенные состовные типы
+subrangeType: expression DOTDOT expression ;  // перечисление в виде "начало..конец"
+arrayType: ARRAY LBRACK subrangeTypeList RBRACK OF componentType ;  // массив
+subrangeTypeList: subrangeType (COMMA subrangeType)* ;  // несколько перечеслений "начало1..конец1, начало2..конец2"
+structureType: STRUCT LCURLY structureTypeList RCURLY ;  // структура
+structureTypeList: (newline)? parameter ((newline | SEMI) parameter)* ;  // перечисление полей структуры
 setType: SET ;
 queueType: QUEUE ;
 stackType: STACK ;
@@ -216,5 +216,5 @@ INFINITY: '\\infty' ;
 NEWLINE: '\r'? '\n' ;
 
 COMMENT_LINE: '//' ~[\r\n]* ;
-FUNCTION_INPUT: '\u0412\u0445\u043E\u0434:' ~[\r\n]* ; // 'Вход:'
-FUNCTION_OUTPUT: '\u0412\u044B\u0445\u043E\u0434:' ~[\r\n]* ; // 'Выход:'
+FUNCTION_INPUT: '\u0412\u0445\u043E\u0434:' ~[\r\n]* ;  // 'Вход:'
+FUNCTION_OUTPUT: '\u0412\u044B\u0445\u043E\u0434:' ~[\r\n]* ;  // 'Выход:'
